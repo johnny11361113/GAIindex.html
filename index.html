@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>正在跳轉至問卷...</title>
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        .spinner {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #2ecc71; /* SurveyCake 的綠色風格 */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        h2 { color: #333; margin-bottom: 10px; }
+        p { color: #666; line-height: 1.6; }
+        .manual-link {
+            margin-top: 25px;
+            display: none; 
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        a { color: #2ecc71; text-decoration: none; font-weight: bold; font-size: 1.1em;}
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="spinner"></div>
+        <h2>正在為您分配問卷...</h2>
+        <p>感謝您的參與，系統將自動跳轉至問卷頁面。<br>請稍候約 1 秒。</p>
+        
+        <div id="manual-box" class="manual-link">
+            <p>如果瀏覽器沒有自動跳轉，請直接點擊下方連結：</p>
+            <a id="click-link" href="#">👉 點擊這裡進入問卷</a>
+        </div>
+    </div>
+
+    <script>
+        // 定義您的 6 個 SurveyCake 問卷網址 (已根據您提供的檔案設定完畢)
+        const surveys = [
+            "https://www.surveycake.com/s/en07X",  // 1. 機械式 高 FATE
+            "https://www.surveycake.com/s/N7GrM",  // 2. 機械式 低 FATE
+            "https://www.surveycake.com/s/vpo8O",  // 3. 思考式 高 FATE
+            "https://www.surveycake.com/s/wpk7e",  // 4. 思考式 低 FATE (AFTE)
+            "https://www.surveycake.com/s/6AMmd",  // 5. 情感式 高 FATE
+            "https://www.surveycake.com/s/0b8mL"   // 6. 情感式 低 FATE
+        ];
+
+        // 使用 Math.random() 進行隨機抽樣
+        // 這會在 0 到 5 之間隨機選一個數字
+        const randomIndex = Math.floor(Math.random() * surveys.length);
+        const targetUrl = surveys[randomIndex];
+
+        // 設定延遲跳轉 (800毫秒)，讓使用者有心理準備
+        setTimeout(function() {
+            // 執行跳轉
+            window.location.href = targetUrl;
+            
+            // 備案：如果 3 秒後還沒跳轉成功，顯示手動點擊連結
+            setTimeout(function(){
+                document.getElementById("manual-box").style.display = "block";
+                document.getElementById("click-link").href = targetUrl;
+            }, 3000);
+        }, 800);
+    </script>
+
+</body>
+</html>
